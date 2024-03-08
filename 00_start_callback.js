@@ -4,23 +4,23 @@ import { React, useRef } from 'react'
 const App = () => {
   const anim = useRef(new Animated.Value(0)).current;
 
-  const inter = anim.interpolate({
-    inputRange: [0,0.5,1],
-    outputRange:["rgb(255, 99, 71)","rgb(99, 255, 71)", "rgb(99, 71, 255)"]
-  })
   const move = () => {
     Animated.timing(anim, {
       toValue: 1,
-      duration: 1000,
-      useNativeDriver: false
-    }).start();
+      duration: 3000,
+      useNativeDriver: true
+    }).start(() => {
+      Animated.timing(anim, {
+        toValue: 0,
+        duration: 3000,
+        useNativeDriver: true
+      }).start();
+    });
   }
-
-  const obj = { backgroundColor: inter}
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{...styles.box, ...obj }}>
+      <Animated.View style={{ ...styles.box, opacity: anim }}>
         <Text>App</Text>
       </Animated.View>
       <Button title='click' onPress={move}></Button>
@@ -32,12 +32,14 @@ export default App
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   },
   box: {
-    
     height: 150,
-    width: 150
+    width: 150,
+    backgroundColor: "tomato"
 
   }
 

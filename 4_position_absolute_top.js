@@ -4,19 +4,15 @@ import { React, useRef } from 'react'
 const App = () => {
   const anim = useRef(new Animated.Value(0)).current;
 
-  const inter = anim.interpolate({
-    inputRange: [0,0.5,1],
-    outputRange:["rgb(255, 99, 71)","rgb(99, 255, 71)", "rgb(99, 71, 255)"]
-  })
   const move = () => {
     Animated.timing(anim, {
-      toValue: 1,
-      duration: 1000,
+      toValue: 100,
+      duration: 3000,
       useNativeDriver: false
     }).start();
   }
 
-  const obj = { backgroundColor: inter}
+  const obj = {position:"relative", top: anim, left: 0}
 
   return (
     <View style={styles.container}>
@@ -37,7 +33,8 @@ const styles = StyleSheet.create({
   box: {
     
     height: 150,
-    width: 150
+    width: 150,
+    backgroundColor: "tomato"
 
   }
 
